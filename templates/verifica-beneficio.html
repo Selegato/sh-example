@@ -1,0 +1,108 @@
+{% extends 'base.html' %} {% block content %}
+
+<style>
+  .beneficio-checkbox {
+    transform: scale(2.5); /* checkbox size */
+    margin: 10px; /* center */
+  }
+  td {
+    /* center */
+    vertical-align: middle;
+    text-align: center;
+  }
+  #loadingIndicator {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    z-index: 1000;
+  }
+</style>
+
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <h1 class="text-center mb-4">Busca Benefícios</h1>
+      <div class="card">
+        <div class="card-body">
+          <form id="cpfForm">
+            <div class="input-group mb-3">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Digite o CPF"
+                name="cpf"
+                id="cpf"
+                required
+                maxlength="14"
+                pattern="\d{3}\.\d{3}\.\d{3}-\d{2}"
+                title="O CPF deve estar no formato 000.000.000-00"
+              />
+              <button class="btn btn-primary" type="submit">Buscar</button>
+            </div>
+          </form>
+
+          <div id="divBandeira" style="display: none" class="mt-4">
+            <h5 class="card-title">Bandeira</h5>
+            <select class="form-select" id="bandeiraSeletor"></select>
+          </div>
+
+          <div id="customerInfo" style="display: none" class="mt-3">
+            <div
+              class="container d-flex align-itens-center justify-content-center"
+            >
+              <h2>Dados Cliente:</h2>
+            </div>
+            <div
+              class="container d-flex align-itens-center justify-content-center gap-3"
+            >
+              <div>
+                <p><strong>Nome:</strong> <span id="customerName"></span></p>
+              </div>
+              <div>
+                <p>
+                  <strong>Pontos Atual:</strong>
+                  <span id="customerPontos"></span>
+                </p>
+              </div>
+              <div>
+                <p>
+                  <strong>Categoria Atual:</strong>
+                  <span id="customerCategoria"></span>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div id="divCiclos" style="display: none" class="mt-4">
+            <h5 class="card-title">Período do Ciclo</h5>
+            <select class="form-select" id="cicloSeletor"></select>
+          </div>
+        </div>
+      </div>
+
+      <div id="divBeneficios" style="display: none" class="mt-4">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Benefícios do cliente no período</h5>
+            <div id="beneficiosContainer" class="table-responsive"></div>
+            <button id="btnBaixa" class="btn btn-primary" style="display: none">
+              Baixar
+            </button>
+            <div id="loadingIndicator" style="display: none">
+              <p>Baixando benefícios, por favor aguarde...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %} {% block extra_scripts %}
+<script src="{{ url_for('static', filename='js/beneficios.js') }}"></script>
+{%endblock%}
